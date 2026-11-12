@@ -1,6 +1,13 @@
 /* Replace null values with the artist's verified URLs and video files. */
 const artist = {
-  platforms: {Spotify:null,"Apple Music":null,Deezer:null,TIDAL:null,Instagram:null},
+  platforms: {
+    Spotify:"https://open.spotify.com/artist/3XdT1fvyQNNDWDrSXuE87g",
+    "Apple Music":"https://music.apple.com/us/artist/omri-israel/1848180581",
+    Deezer:"https://www.deezer.com/en/artist/352427122?host=6677498923&deferredFl=1&universal_link=1",
+    TIDAL:"https://tidal.com/artist/68797980",
+    YouTube:"https://www.youtube.com/@omriisrael9962",
+    Instagram:"https://www.instagram.com/omri_israel_/"
+  },
   tracks: [
     {title:"שיר ראשון",links:{}},
     {title:"שיר שני",links:{}},
@@ -17,6 +24,7 @@ const shapes = {
  "Apple Music":'<path d="M21 3v18a5 5 0 1 1-3-4V8L10 10v14a5 5 0 1 1-3-4V7z"/>',
  Deezer:'<path d="M2 23h4v6H2zm6-6h4v12H8zm6 3h4v9h-4zm6-12h4v21h-4zm6-6h4v27h-4z"/>',
  TIDAL:'<path d="m1 9 5-5 5 5-5 5zm10 0 5-5 5 5-5 5zm10 0 5-5 5 5-5 5zM11 19l5-5 5 5-5 5z"/>',
+ YouTube:'<rect x="2" y="7" width="28" height="18" rx="5"/><path d="M13 11.5v9l7-4.5z" fill="#170f1b"/>',
  Instagram:'<rect x="4" y="4" width="24" height="24" rx="6" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" stroke-width="2.6"/><circle cx="24" cy="8" r="1.7"/>'
 };
 const icon = name => '<svg viewBox="0 0 32 32" aria-hidden="true">'+shapes[name]+'</svg>';
@@ -54,7 +62,7 @@ dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dia
 document.querySelectorAll('[data-song]').forEach(button=>button.addEventListener('click',()=>{
  const track=artist.tracks[Number(button.dataset.song)];
  showDialog(track.title,'<p>בחרו איפה לשמוע</p><div class="platforms" id="track-links"></div>');
- Object.keys(artist.platforms).filter(name=>name!=='Instagram').forEach(name=>{
+ Object.keys(artist.platforms).filter(name=>name!=='Instagram'&&name!=='YouTube').forEach(name=>{
   const url=track.links[name];
   const a=document.createElement('a');a.className='platform';a.href=url||'#missing';a.innerHTML=icon(name)+name;
   if(url){a.target='_blank';a.rel='noopener noreferrer'}
